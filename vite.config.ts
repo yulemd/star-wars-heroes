@@ -4,6 +4,7 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/star-wars-heroes/',
   plugins: [react()],
   css: {
     postcss: './postcss.config.js',
