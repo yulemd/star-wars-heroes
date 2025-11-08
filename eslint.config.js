@@ -1,5 +1,6 @@
 // eslint.config.js
 import js from '@eslint/js';
+import alias from 'eslint-import-resolver-alias';
 import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -40,6 +41,15 @@ export default tseslint.config(
     },
     settings: {
       react: { version: 'detect' },
+      'import/resolver': {
+        alias: {
+          map: [
+            ['@', './src'],
+            ['@components', './src/components'],
+          ],
+          extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        },
+      },
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
