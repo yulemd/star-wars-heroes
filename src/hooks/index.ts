@@ -1,1 +1,1 @@
-export { useApi } from './useApi';
+export { useInfiniteApi } from './useInfiniteApi';
