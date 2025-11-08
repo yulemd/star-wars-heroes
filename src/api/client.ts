@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { type ZodSchema } from 'zod';
 
-const API_BASE_URL = 'https://sw-api.starnavi.io';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const fetchFromApi = async <T>(
   endpoint: string,
