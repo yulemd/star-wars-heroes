@@ -3,7 +3,7 @@ import { StarField } from './components/StarField';
 
 function App() {
   return (
-    <main className="relative px-28 min-h-screen bg-black overflow-hidden perspective-1000">
+    <main className="relative min-h-screen bg-black overflow-hidden perspective-1000">
       <StarField />
 
       {/* Depth gradient */}

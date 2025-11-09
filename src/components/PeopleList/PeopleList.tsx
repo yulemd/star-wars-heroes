@@ -1,9 +1,11 @@
-import { useInfiniteApi } from '@/hooks/useInfiniteApi';
-import type { PersonType } from '@/schemas/personSchema';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+
+import { useInfiniteApi } from '@/hooks/useInfiniteApi';
 import { PersonDetailedModal } from '../modal';
 import { PersonCard } from '../PersonCard';
+
+import type { PersonType } from '@/schemas/personSchema';
 
 export const PeopleList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
@@ -47,7 +49,7 @@ export const PeopleList = () => {
 
   return (
     <>
-      <div className="relative max-w-[95vw] mx-auto px-4 py-12">
+      <div className="relative max-w-[70vw] mx-auto px-4 py-12">
         {/* Slow top scanner */}
         <motion.div
           className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-cyan-400 to-transparent opacity-60 blur-sm"

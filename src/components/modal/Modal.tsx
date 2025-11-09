@@ -49,7 +49,7 @@ export const Modal = ({ open, onClose, children }: ModalProps) => {
       />
       {/* Content */}
       <motion.div
-        className="relative z-10000"
+        className="relative z-10000 w-full md:w-3/4 lg:w-2/3 max-w-5xl"
         onClick={(e) => e.stopPropagation()}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

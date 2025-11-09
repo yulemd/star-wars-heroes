@@ -6,7 +6,10 @@ interface PersonCardProps {
   onClick: () => void;
 }
 
-export const PersonCard = ({ person, onClick }: PersonCardProps) => (
+export const PersonCard = ({
+  person: { name, gender, height, mass, birth_year },
+  onClick,
+}: PersonCardProps) => (
   <motion.div
     onClick={onClick}
     className={`
@@ -29,22 +32,26 @@ export const PersonCard = ({ person, onClick }: PersonCardProps) => (
     <div style={{ transform: 'translateZ(25px)' }}>
       <h2
         className="text-xl font-bold text-yellow-400 tracking-widest mb-3 glitch"
-        data-text={person.name}
+        data-text={name}
       >
-        {person.name.toUpperCase()}
+        {name.toUpperCase()}
       </h2>
       <div className="space-y-1.5 text-cyan-200 text-xs leading-relaxed">
         <p>
-          <span className="text-yellow-300">GENDER:</span> {person.gender}
+          <span className="text-yellow-300">GENDER:</span>{' '}
+          {gender !== 'unknown' ? gender : 'N/A'}
         </p>
         <p>
-          <span className="text-yellow-300">HEIGHT:</span> {person.height} cm
+          <span className="text-yellow-300">HEIGHT:</span>{' '}
+          {height !== 'unknown' ? `${height} cm` : 'N/A'}
         </p>
         <p>
-          <span className="text-yellow-300">MASS:</span> {person.mass} kg
+          <span className="text-yellow-300">MASS:</span>{' '}
+          {mass !== 'unknown' ? `${mass} kg` : 'N/A'}
         </p>
         <p>
-          <span className="text-yellow-300">BORN:</span> {person.birth_year}
+          <span className="text-yellow-300">BORN:</span>{' '}
+          {birth_year !== 'unknown' ? birth_year : 'N/A'}
         </p>
       </div>
     </div>
