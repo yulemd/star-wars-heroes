@@ -6,8 +6,7 @@ import type { EndpointMap } from '@/api/types';
 
 const endpointToMethodMap = {
   people: 'getPeople',
-  planets: 'getPlanets',
-  starships: 'getStarships',
+  films: 'getFilms',
 } as const;
 
 export const useInfiniteApi = <T extends keyof typeof endpointToMethodMap>(

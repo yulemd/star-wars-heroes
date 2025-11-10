@@ -1,26 +1,26 @@
 import {
+  FilmsResponseSchema,
+  type FilmsResponseType,
+} from '@/schemas/filmsSchema';
+import {
   PeopleResponseSchema,
   type PeopleResponseType,
+  PersonSchema,
+  type PersonType,
 } from '@/schemas/personSchema';
-import {
-  PlanetsResponseSchema,
-  type PlanetsResponseType,
-} from '@/schemas/planetsSchema';
-import {
-  StarshipsResponseSchema,
-  type StarshipsResponseType,
-} from '@/schemas/starshipsSchema';
-import { fetchFromApi } from './client';
+import { StarshipSchema, type StarshipType } from '@/schemas/starshipsSchema';
+import { fetchFromApi, fetchMultipleWithDelay, fetchSource } from './client';
 
 export const swapi = {
   getPeople: (page = 1) =>
     fetchFromApi<PeopleResponseType>('people', PeopleResponseSchema, page),
-  getPlanets: (page = 1) =>
-    fetchFromApi<PlanetsResponseType>('planets', PlanetsResponseSchema, page),
-  getStarships: (page = 1) =>
-    fetchFromApi<StarshipsResponseType>(
-      'starships',
-      StarshipsResponseSchema,
-      page,
-    ),
+
+  getFilms: (page = 1) =>
+    fetchFromApi<FilmsResponseType>('films', FilmsResponseSchema, page),
+
+  getPersonById: (id: string) =>
+    fetchSource<PersonType>('people', PersonSchema, id),
+
+  getStarshipsByIds: (ids: string[]) =>
+    fetchMultipleWithDelay<StarshipType>('starships', StarshipSchema, ids, 250),
 };

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
-import { useInfiniteApi } from '@/hooks/useInfiniteApi';
+import { useInfiniteApi } from '@/queries/useInfiniteApi';
 import { PersonDetailedModal } from '../modal';
 import { PersonCard } from '../PersonCard';
 
@@ -11,9 +11,27 @@ export const PeopleList = () => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteApi('people');
 
+  const { data: filmsData } = useInfiniteApi('films');
+
   const [selectedPerson, setSelectedPerson] = useState<PersonType | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
   const items = data?.pages.flatMap((page) => page.results) ?? [];
+
+  const filmsList = filmsData?.pages.flatMap((page) => page.results) ?? [];
+
+  const episodes = selectedPerson
+    ? filmsList.reduce<typeof filmsList>((acc, film) => {
+        if (!selectedPerson.films.includes(film.id)) return acc;
+
+        const matchedStarships = film.starships.filter((s) =>
+          selectedPerson.starships.includes(s),
+        );
+
+        acc.push({ ...film, starships: matchedStarships });
+        return acc;
+      }, [])
+    : [];
 
   useEffect(() => {
     if (!hasNextPage) return;
@@ -115,6 +133,8 @@ export const PeopleList = () => {
       </div>
 
       <PersonDetailedModal
+        key={selectedPerson?.id}
+        episodes={episodes}
         person={selectedPerson}
         onClose={() => setSelectedPerson(null)}
       />

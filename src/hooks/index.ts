@@ -1,1 +1,0 @@
-export { useInfiniteApi } from './useInfiniteApi';
