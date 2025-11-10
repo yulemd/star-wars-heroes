@@ -1,22 +1,19 @@
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
+
+import { Loader } from '../Loader';
+import { PersonDetailedModal } from '../modal';
+import { PeopleGrid } from './PeopleGrid';
+import { usePeople } from './usePeople';
 
 import { useInfiniteApi } from '@/queries/useInfiniteApi';
-import { PersonDetailedModal } from '../modal';
-import { PersonCard } from '../PersonCard';
-
 import type { PersonType } from '@/schemas/personSchema';
 
 export const PeopleList = () => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
-    useInfiniteApi('people');
-
+  const { items, loadMoreRef, isFetchingNextPage, hasNextPage, status } =
+    usePeople();
   const { data: filmsData } = useInfiniteApi('films');
-
   const [selectedPerson, setSelectedPerson] = useState<PersonType | null>(null);
-  const loadMoreRef = useRef<HTMLDivElement | null>(null);
-
-  const items = data?.pages.flatMap((page) => page.results) ?? [];
 
   const filmsList = filmsData?.pages.flatMap((page) => page.results) ?? [];
 
@@ -32,24 +29,6 @@ export const PeopleList = () => {
         return acc;
       }, [])
     : [];
-
-  useEffect(() => {
-    if (!hasNextPage) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) fetchNextPage();
-      },
-      { rootMargin: '400px' },
-    );
-
-    const el = loadMoreRef.current;
-    if (el) observer.observe(el);
-
-    return () => {
-      if (el) observer.unobserve(el);
-    };
-  }, [hasNextPage, fetchNextPage]);
 
   if (status === 'pending')
     return (
@@ -75,61 +54,13 @@ export const PeopleList = () => {
           transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
         />
 
-        {/* Grid */}
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {items.map((person, idx) => (
-            <motion.li
-              key={person.id}
-              className="relative preserve-3d"
-              initial={{ opacity: 0, y: 60, rotateX: -15 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: idx * 0.05,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              <PersonCard
-                person={person}
-                onClick={() => setSelectedPerson(person)}
-              />
-            </motion.li>
-          ))}
-        </ul>
+        <PeopleGrid people={items} onSelect={setSelectedPerson} />
 
-        {/* Loader */}
-        <div
-          ref={loadMoreRef}
-          className="h-24 flex justify-center items-center mt-16"
-        >
-          {isFetchingNextPage && (
-            <div className="flex items-center gap-3 text-cyan-400">
-              <div className="flex gap-2">
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 h-2 bg-cyan-400 rounded-full"
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{
-                      duration: 1.2,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: i * 0.15,
-                    }}
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-orbitron tracking-wider">
-                SCANNING SECTOR...
-              </span>
-            </div>
-          )}
-          {!hasNextPage && (
-            <p className="text-gray-500 font-orbitron text-sm tracking-widest">
-              END OF DATA STREAM
-            </p>
-          )}
-        </div>
+        <Loader
+          isLoading={isFetchingNextPage}
+          hasMore={hasNextPage}
+          loadMoreRef={loadMoreRef}
+        />
       </div>
 
       <PersonDetailedModal
