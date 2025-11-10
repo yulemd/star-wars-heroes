@@ -37,19 +37,19 @@ export const Modal = ({ open, onClose, children }: ModalProps) => {
 
   return createPortal(
     <div
-      className="fixed inset-0 z-9999 flex items-center justify-center p-6"
+      className="fixed inset-0 z-9999 flex items-center justify-center p-6 pointer-events-none"
       onClick={onClose}
     >
       {/* Background */}
       <motion.div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       />
       {/* Content */}
       <motion.div
-        className="relative z-10000 w-full md:w-3/4 lg:w-2/3 max-w-5xl"
+        className="relative z-10000 w-full md:w-3/4 lg:w-2/3 max-w-5xl pointer-events-auto"
         onClick={(e) => e.stopPropagation()}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

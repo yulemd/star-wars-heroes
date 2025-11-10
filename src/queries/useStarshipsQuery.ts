@@ -11,5 +11,5 @@ export const useStarships = (person: PersonType) => {
     staleTime: 1000 * 60 * 5,
   });
 
-  return starshipQueries.data;
+  return starshipQueries;
 };

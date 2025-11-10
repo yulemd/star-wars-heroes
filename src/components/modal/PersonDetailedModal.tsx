@@ -18,7 +18,7 @@ export const PersonDetailedModal = ({
   <Modal open={!!person} onClose={onClose}>
     {person && (
       <PersonDetailedCard
-        episodes={episodes}
+        episodes={episodes ?? []}
         person={person}
         onClose={onClose}
       />
