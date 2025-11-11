@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Loader } from '../Loader';
 import { PersonDetailedModal } from '../modal';
@@ -15,20 +15,22 @@ export const PeopleList = () => {
   const { data: filmsData } = useInfiniteApi('films');
   const [selectedPerson, setSelectedPerson] = useState<PersonType | null>(null);
 
-  const filmsList = filmsData?.pages.flatMap((page) => page.results) ?? [];
+  const filmsList = useMemo(
+    () => filmsData?.pages.flatMap((page) => page.results) ?? [],
+    [filmsData],
+  );
 
-  const episodes = selectedPerson
-    ? filmsList.reduce<typeof filmsList>((acc, film) => {
-        if (!selectedPerson.films.includes(film.id)) return acc;
-
-        const matchedStarships = film.starships.filter((s) =>
-          selectedPerson.starships.includes(s),
-        );
-
-        acc.push({ ...film, starships: matchedStarships });
-        return acc;
-      }, [])
-    : [];
+  const episodes = useMemo(() => {
+    if (!selectedPerson) return [];
+    return filmsList.reduce<typeof filmsList>((acc, film) => {
+      if (!selectedPerson.films.includes(film.id)) return acc;
+      const matchedStarships = film.starships.filter((s) =>
+        selectedPerson.starships.includes(s),
+      );
+      acc.push({ ...film, starships: matchedStarships });
+      return acc;
+    }, []);
+  }, [selectedPerson, filmsList]);
 
   if (status === 'pending')
     return (

@@ -1,8 +1,15 @@
+import { motion } from 'framer-motion';
+import { lazy, Suspense } from 'react';
+
+import { usePersonGraphNodes } from './usePersonGraphNodes';
+import { Loader } from '../Loader';
+
 import type { FilmType } from '@/schemas/filmsSchema';
 import type { PersonType } from '@/schemas/personSchema';
-import { motion } from 'framer-motion';
-import { PersonGraph } from './PersonGraph';
-import { usePersonGraphNodes } from './usePersonGraphNodes';
+
+const PersonGraph = lazy(() =>
+  import('./PersonGraph').then((module) => ({ default: module.PersonGraph })),
+);
 
 interface PersonDetailedCardProps {
   episodes: FilmType[];
