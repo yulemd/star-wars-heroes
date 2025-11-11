@@ -1,7 +1,7 @@
 import type { FilmType } from '@/schemas/filmsSchema';
 import type { PersonType } from '@/schemas/personSchema';
 import { jest } from '@jest/globals';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { PersonDetailedCard } from '..';
 
 // Mock dependencies
@@ -66,21 +66,24 @@ describe('PersonDetailedCard', () => {
     jest.clearAllMocks();
   });
 
-  it('renders the graph with nodes and edges', () => {
+  it('renders the graph with nodes and edges', async () => {
     (usePersonGraphNodes as jest.Mock).mockReturnValue({
       nodes: [{ id: 'node-1' }],
       edges: [{ id: 'edge-1', source: 'node-1', target: 'node-2' }],
     });
 
-    render(
-      <PersonDetailedCard
-        person={mockPerson}
-        episodes={mockEpisodes}
-        onClose={mockOnClose}
-      />,
-    );
+    await act(async () => {
+      render(
+        <PersonDetailedCard
+          person={mockPerson}
+          episodes={mockEpisodes}
+          onClose={mockOnClose}
+        />,
+      );
+    });
 
-    expect(screen.getByTestId('person-graph')).toBeInTheDocument();
+    const graph = await screen.findByTestId('person-graph');
+    expect(graph).toBeInTheDocument();
   });
 
   it('calls onClose when close button is clicked', () => {

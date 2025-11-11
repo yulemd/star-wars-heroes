@@ -32,7 +32,9 @@ export const PersonDetailedCard = ({
         ×
       </button>
 
-      <PersonGraph nodes={nodes} edges={edges} />
+      <Suspense fallback={<Loader />}>
+        <PersonGraph nodes={nodes} edges={edges} />
+      </Suspense>
     </motion.div>
   );
 };

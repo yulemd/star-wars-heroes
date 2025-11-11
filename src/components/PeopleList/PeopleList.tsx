@@ -60,6 +60,7 @@ export const PeopleList = () => {
           isLoading={isFetchingNextPage}
           hasMore={hasNextPage}
           loadMoreRef={loadMoreRef}
+          variant="infinite"
         />
       </div>
 
