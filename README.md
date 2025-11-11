@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# Star Wars Heroes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small test project built with **React**, **TypeScript**, and **React Flow**, showcasing clean architecture, component decomposition, and testing practices.  
+The app displays a list of Star Wars characters and visualizes their relationships through an interactive graph.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 View Demo
 
-## React Compiler
+👉 **Live Demo:** [https://yulemd.github.io/star-wars-heroes/](https://yulemd.github.io/star-wars-heroes/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Project Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project was created as a demonstration of front-end architecture and React ecosystem proficiency.  
+It focuses on data-driven UI rendering, component isolation, and visual graph presentation using React Flow.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+- **React + TypeScript** — strongly typed functional components
+- **Modular architecture** — reusable and testable UI components
+- **React Flow** — dynamic graph visualization for character relations
+- **Infinite Scroll** — smooth data loading experience
+- **Jest + React Testing Library** — unit tests with mocking and coverage
+- **TailwindCSS** — fast and consistent styling
+- **Vite** — lightning-fast development and build tool
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+## Tech Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+| Category             | Tools / Libraries            |
+| -------------------- | ---------------------------- |
+| Framework            | React 19 + TypeScript        |
+| Styling              | TailwindCSS                  |
+| Data fetching        | React Query / custom hooks   |
+| Graph visualization  | React Flow (@xyflow/react)   |
+| Testing              | Jest + React Testing Library |
+| Build tool           | Vite                         |
+| Linting & Formatting | ESLint + Prettier            |
+
+---
+
+## Setup & Run
+
+### 1 Install dependencies
+
+```yarn install```
+
+### 2 Start development server
+
+```yarn dev```
+
+### 3 Run tests
+
+```yarn tests```
+
+### 3 Build for production
+
+```yarn build```
+
+## Development Highlights
+
+- Clear separation of presentation and data logic
+- Dynamic component composition for graphs and cards
+- Custom hooks for infinite data loading
+- Mocked dependencies in tests for isolated behavior
+
+## License
+
+This project is distributed without an open-source license and is intended for demonstration purposes only.
